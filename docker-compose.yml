@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  # Foundry VTT node service.
+  foundry_node:
+    build:
+      context: ./
+      dockerfile: Dockerfile-foundrynode
+    # Update the version number below, as needed.
+    image: foundrynode:0.0.3
+    container_name: foundry_node
+    ports:
+      - "30000:30000"
+    volumes:
+      - ./public/worlds:/app/public/worlds
+      # Add additional synced directories as desired.
+      # - ./public/systems:/app/public/systems
+
+  # External file browser service.
+  foundry_filebrowser:
+    image: filebrowser/filebrowser
+    container_name: foundry_filebrowser
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public:/srv
+      - ./config/filebrowser/config.json:/config/json
+      - ./data/database.db:/database.db

@@ -1,0 +1,10 @@
+# Get the latest version of node.js
+FROM node:latest
+
+# Copy our app contents.
+WORKDIR /app
+COPY app /app
+
+# Run node using the main.js file.
+CMD [ "node", "main.js", "--headless"]
+EXPOSE 30000
