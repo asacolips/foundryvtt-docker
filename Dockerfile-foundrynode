@@ -1,10 +1,7 @@
-# Get the latest version of node.js
-FROM node:latest
+FROM node:carbon-jessie
 
-# Copy our app contents.
 WORKDIR /app
 COPY app /app
-
-# Run node using the main.js file.
+RUN npm install
 CMD [ "node", "main.js", "--headless"]
-EXPOSE 30000
+EXPOSE 80

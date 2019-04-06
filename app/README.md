@@ -1,1 +1,1 @@
-Extra the contents of the Foundry VTT alpha here.
+Extract the contents of the Foundry VTT beta here.

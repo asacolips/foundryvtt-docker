@@ -14,6 +14,7 @@ For maximum performance, this setup assumes that the only directory you want to 
 
 ```yaml
     volumes:
+      - ./app:/app
       - ./public/worlds:/app/public/worlds
       - ./public/systems:/app/public/systems
 ```
@@ -38,33 +39,27 @@ Whenever a new version of Foundry is released, extract its contents to the `/app
 docker-compose up -d --build
 ```
 
-It's also probably a good idea to update the tag number for the node service's image in the `docker-compose.yml`. For example, this repo is currently assuming you're using alpha version 0.0.3:
+It's also probably a good idea to update the tag number for the node service's image in the `docker-compose.yml`. For example, this repo is currently assuming you're using alpha version 0.2.5:
 
 ```yaml
 version: '3'
 
 services:
-  # web server
-  node:
+  # Foundry VTT node service.
+  foundry_node:
     build:
       context: ./
       dockerfile: Dockerfile-foundrynode
     # Update the version number below, as needed.
-    image: foundrynode:0.0.3
+    image: foundrynode:0.2.5
     container_name: foundry_node
+    restart: always
     ports:
       - "30000:30000"
     volumes:
+      - ./app:/app
       - ./public/worlds:/app/public/worlds
-  filebrowser:
-    image: filebrowser/filebrowser
-    container_name: foundry_filebrowser
-    ports:
-      - "8080:80"
-    volumes:
-      - ./public:/srv
-      - ./config/filebrowser/config.json:/config/json
-      - ./data/database.db:/database.db
+      - ./public/modules:/app/public/modules
 ```
 
 ## Access Foundry in the browser!
